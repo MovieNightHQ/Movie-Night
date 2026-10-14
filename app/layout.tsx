@@ -131,18 +131,7 @@ export const metadata: Metadata = {
     images: ["/favicon.png"],
     creator: "@MovieNight",
     site: "@MovieNight",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  }
 };
 
 export default async function RootLayout({
