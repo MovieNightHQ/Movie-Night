@@ -1,11 +1,22 @@
+import { unstable_cache } from "next/cache";
 import { supabaseClient } from "../supabase";
 
-export default async function AppConfig() {
-  try {
+// Cached so every page render (including bot crawls) doesn't hit Supabase.
+const getAppConfig = unstable_cache(
+  async () => {
     const { data } = await supabaseClient
       .from("app_config")
       .select("force_stop,force_message,platform")
       .maybeSingle();
+    return data;
+  },
+  ["app-config"],
+  { revalidate: 60 }
+);
+
+export default async function AppConfig() {
+  try {
+    const data = await getAppConfig();
 
     if (
       data?.force_stop &&
